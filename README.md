@@ -346,10 +346,66 @@ CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
 
 ```
 
-
 06 - Docker Tags e Versões
 
+```text
+λ docker images
+REPOSITORY   TAG       IMAGE ID       CREATED       SIZE
+ubuntu       latest    ba6acccedd29   7 weeks ago   72.8MB
+
+λ docker run -itd ubuntu:18.04
+Unable to find image 'ubuntu:18.04' locally
+18.04: Pulling from library/ubuntu
+284055322776: Pull complete
+Digest: sha256:0fedbd5bd9fb72089c7bbca476949e10593cebed9b1fb9edf5b79dbbacddd7d6
+Status: Downloaded newer image for ubuntu:18.04
+541aaff99bd0a4602aa724b692e8bfbb12ea4e0c65f2ff8fdfb13029b11e23e2
+
+λ docker images
+REPOSITORY   TAG       IMAGE ID       CREATED        SIZE
+ubuntu       latest    ba6acccedd29   7 weeks ago    72.8MB
+ubuntu       18.04     5a214d77f5d7   2 months ago   63.1MB
+```
+
 07 - Expor Portas de um Container Docker
+
+```text
+λ docker images
+REPOSITORY   TAG       IMAGE ID       CREATED        SIZE
+ubuntu       latest    ba6acccedd29   7 weeks ago    72.8MB
+ubuntu       18.04     5a214d77f5d7   2 months ago   63.1MB
+
+λ docker run -d nginx
+Unable to find image 'nginx:latest' locally
+latest: Pulling from library/nginx
+e5ae68f74026: Pull complete
+21e0df283cd6: Pull complete
+ed835de16acd: Pull complete
+881ff011f1c9: Pull complete
+77700c52c969: Pull complete
+44be98c0fab6: Pull complete
+Digest: sha256:9522864dd661dcadfd9958f9e0de192a1fdda2c162a35668ab6ac42b465f0603
+Status: Downloaded newer image for nginx:latest
+3993c2f20194902f1ea84c79847505adc11dfceb62a7ec8966e54c1307c36c60
+
+λ docker ps
+CONTAINER ID   IMAGE          COMMAND                  CREATED              STATUS              PORTS     NAMES
+3993c2f20194   nginx          "/docker-entrypoint.…"   About a minute ago   Up About a minute   80/tcp    flamboyant_johnson
+541aaff99bd0   ubuntu:18.04   "bash"                   4 minutes ago        Up 4 minutes                  agitated_lamarr
+
+λ docker run -d -p 80:80 nginx
+d5378434f23a102e83a8e2dcafda049d3709c9385f31c754f19d18a8605b164b
+docker: Error response from daemon: Ports are not available: listen tcp 0.0.0.0:80: bind: An attempt was made to access a socket in a way forbidden by its access permissions.
+
+λ docker run -d -p 88:80 nginx
+fb76126fd87a872d514842af731a7f56b3f446a89ef5127a4a4b7bc8508f6c0f
+
+λ docker ps
+CONTAINER ID   IMAGE          COMMAND                  CREATED              STATUS              PORTS                NAMES
+fb76126fd87a   nginx          "/docker-entrypoint.…"   About a minute ago   Up About a minute   0.0.0.0:88->80/tcp   amazing_nightingale 3993c2f20194   nginx          "/docker-entrypoint.…"   4 minutes ago        Up 3 minutes        80/tcp               flamboyant_johnson
+541aaff99bd0   ubuntu:18.04   "bash"                   6 minutes ago        Up 6 minutes                             agitated_lamarr
+
+```
 
 08 - Criar Containers Docker com Nome
 
