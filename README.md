@@ -275,7 +275,77 @@ cf459cb37b28   hello-world   "/hello"   11 hours ago     Exited (0) 11 hours ago
 
 04 - Excluir Containers e Imagens Docker
 
+```text
+$ docker rm 337
+337
+
+$ docker rm 337
+337
+
+$ docker ps -a
+CONTAINER ID   IMAGE         COMMAND    CREATED          STATUS                      PORTS     NAMES
+86c76e7bd106   ubuntu        "bash"     18 minutes ago   Exited (0) 15 minutes ago             ecstatic_dewdney
+39b76ecbd594   ubuntu        "ls"       26 minutes ago   Exited (0) 26 minutes ago             reverent_clarke
+47c9cf1068b3   ubuntu        "bash"     29 minutes ago   Exited (0) 29 minutes ago             trusting_hofstadter
+cf459cb37b28   hello-world   "/hello"   11 hours ago     Exited (0) 11 hours ago               condescending_swartz
+
+```
+
+```text
+λ docker images
+REPOSITORY    TAG       IMAGE ID       CREATED        SIZE
+ubuntu        latest    ba6acccedd29   7 weeks ago    72.8MB
+hello-world   latest    feb5d9fea6a5   2 months ago   13.3kB
+
+λ docker rmi feb5d9fea6a5
+Untagged: hello-world:latest
+Untagged: hello-world@sha256:cc15c5b292d8525effc0f89cb299f1804f3a725c8d05e158653a563f15e4f685
+Deleted: sha256:feb5d9fea6a5e9606aa995e879d862b825965ba48de054caab5ef356dc6b3412
+Deleted: sha256:e07ee1baac5fae6a26f30cabfe54a36d3402f96afda318fe0a96cec4ca393359
+
+λ docker images
+REPOSITORY   TAG       IMAGE ID       CREATED       SIZE
+ubuntu       latest    ba6acccedd29   7 weeks ago   72.8MB
+```
+
 05 - Alterando o Status de Containers Docker
+
+```text
+λ docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+
+λ docker run -itd ubuntu
+dad495a5c3899882166267f00bf6fbed85d3fbe84341a9ba352f1da7b23abfb9
+
+λ docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED         STATUS         PORTS     NAMES
+dad495a5c389   ubuntu    "bash"    9 seconds ago   Up 4 seconds             pensive_brattain
+
+λ docker restart dad
+dad
+
+λ docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED          STATUS         PORTS     NAMES
+dad495a5c389   ubuntu    "bash"    56 seconds ago   Up 8 seconds             pensive_brattain
+
+λ docker stop dad
+dad
+
+λ docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+
+λ docker ps -a
+CONTAINER ID   IMAGE     COMMAND   CREATED         STATUS                      PORTS     NAMES
+dad495a5c389   ubuntu    "bash"    2 minutes ago   Exited (0) 37 seconds ago             pensive_brattain
+
+λ docker rm dad
+dad
+
+λ docker ps -a
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+
+```
+
 
 06 - Docker Tags e Versões
 
