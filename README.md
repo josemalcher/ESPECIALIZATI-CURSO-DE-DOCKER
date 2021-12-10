@@ -36,7 +36,7 @@ NESSE CURSO VOCÊ VAI APRENDER DE UMA VEZ POR TODAS COMO TRABALHAR COM O DOCKER,
 
 01 - Iniciando com o Docker
 
-```
+```text
 $ docker --help
 
 Usage:  docker [OPTIONS] COMMAND
@@ -132,7 +132,7 @@ Run 'docker COMMAND --help' for more information on a command.
 To get more help with docker, check out our guides at https://docs.docker.com/go/guides/ 
 ```
 
-```
+```text
 $ docker pull hello-world
 Using default tag: latest
 latest: Pulling from library/hello-world
@@ -142,13 +142,13 @@ Status: Downloaded newer image for hello-world:latest
 docker.io/library/hello-world:latest
 ```
 
-```
+```text
 λ docker images
 REPOSITORY    TAG       IMAGE ID       CREATED        SIZE
 hello-world   latest    feb5d9fea6a5   2 months ago   13.3kB
 ```
 
-```
+```text
 λ docker run hello-world
 
 Hello from Docker!
@@ -173,13 +173,13 @@ For more examples and ideas, visit:
  https://docs.docker.com/get-started/
 ```
 
-```
+```text
 λ docker ps
 CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
 
 ```
 
-```
+```text
 λ docker ps -a
 CONTAINER ID   IMAGE         COMMAND    CREATED         STATUS                     PORTS     NAMES
 cf459cb37b28   hello-world   "/hello"   2 minutes ago   Exited (0) 2 minutes ago             condescending_swartz
@@ -188,7 +188,90 @@ cf459cb37b28   hello-world   "/hello"   2 minutes ago   Exited (0) 2 minutes ago
 
 02 - Rodar Comandos dentro de um container Docker
 
+```text
+λ docker run ubuntu
+Unable to find image 'ubuntu:latest' locally
+latest: Pulling from library/ubuntu
+7b1a6ab2e44d: Pull complete
+Digest: sha256:626ffe58f6e7566e00254b638eb7e0f3b11d4da9675088f4781a50ae288f3322
+Status: Downloaded newer image for ubuntu:latest
+```
+
+```text
+λ docker run -it ubuntu ls
+bin   dev  home  lib32  libx32  mnt  proc  run   srv  tmp  var
+boot  etc  lib   lib64  media   opt  root  sbin  sys  usr
+
+```
+
+```text
+λ docker run -it ubuntu bash
+root@86c76e7bd106:/# ls
+bin  boot  dev  etc  home  lib  lib32  lib64  libx32  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+root@86c76e7bd106:/#
+```
+
 03 - Acessar container Docker
+
+```text
+λ docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+
+λ docker run -itd ubuntu
+3379a47c9376ae638284c07e9f91e4d85805cfd636761431e4d*******
+
+λ docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED         STATUS         PORTS     NAMES
+3379a47c9376   ubuntu    "bash"    6 seconds ago   Up 2 seconds             quizzical_brahmagupta
+```
+
+```text
+λ docker run -itd ubuntu
+c93cebdd139628650e75157474ed25e872e58d4026dc2b2f58026********
+
+λ docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED          STATUS          PORTS     NAMES
+c93cebdd1396   ubuntu    "bash"    20 seconds ago   Up 16 seconds             epic_sinoussi
+3379a47c9376   ubuntu    "bash"    4 minutes ago    Up 4 minutes              quizzical_brahmagupta
+
+```
+
+```text
+λ docker exec -it c93 bash
+root@c93cebdd1396:/# ls -a
+.  ..  .dockerenv  bin  boot  dev  etc  home  lib  lib32  lib64  libx32  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var root@c93cebdd1396:/# exit
+exit
+```
+
+```text
+λ docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED         STATUS         PORTS     NAMES
+c93cebdd1396   ubuntu    "bash"    3 minutes ago   Up 3 minutes             epic_sinoussi
+3379a47c9376   ubuntu    "bash"    7 minutes ago   Up 7 minutes             quizzical_brahmagupta
+
+λ docker stop c93
+c93
+
+λ docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED         STATUS         PORTS     NAMES
+3379a47c9376   ubuntu    "bash"    7 minutes ago   Up 7 minutes             quizzical_brahmagupta
+
+λ docker stop 337
+337
+
+λ docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+
+λ docker ps -a
+CONTAINER ID   IMAGE         COMMAND    CREATED          STATUS                      PORTS     NAMES
+c93cebdd1396   ubuntu        "bash"     4 minutes ago    Exited (0) 42 seconds ago             epic_sinoussi
+3379a47c9376   ubuntu        "bash"     8 minutes ago    Exited (0) 6 seconds ago              quizzical_brahmagupta
+86c76e7bd106   ubuntu        "bash"     12 minutes ago   Exited (0) 9 minutes ago              ecstatic_dewdney
+39b76ecbd594   ubuntu        "ls"       20 minutes ago   Exited (0) 20 minutes ago             reverent_clarke
+47c9cf1068b3   ubuntu        "bash"     23 minutes ago   Exited (0) 23 minutes ago             trusting_hofstadter
+cf459cb37b28   hello-world   "/hello"   11 hours ago     Exited (0) 11 hours ago               condescending_swartz
+
+```
 
 04 - Excluir Containers e Imagens Docker
 
