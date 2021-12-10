@@ -523,7 +523,84 @@ docker run --name mysql-op1 -e MYSQL_ROOT_PASSWORD=123456 -p 3306:3306 --volume=
 
 11 - Limitar Memória e CPU em Containers Docker
 
+```text
+λ docker ps -a
+CONTAINER ID   IMAGE          COMMAND                  CREATED        STATUS                    PORTS     NAMES
+fb76126fd87a   nginx          "/docker-entrypoint.…"   10 hours ago   Exited (0) 10 hours ago             amazing_nightingale
+d5378434f23a   nginx          "/docker-entrypoint.…"   10 hours ago   Created                             zen_goldberg
+3993c2f20194   nginx          "/docker-entrypoint.…"   10 hours ago   Exited (0) 10 hours ago             flamboyant_johnson
+541aaff99bd0   ubuntu:18.04   "bash"                   10 hours ago   Exited (0) 10 hours ago             agitated_lamarr
+
+λ docker stats fb76126fd87a
+CONTAINER ID   NAME                  CPU %     MEM USAGE / LIMIT   MEM %     NET I/O   BLOCK I/O   PIDS
+fb76126fd87a   amazing_nightingale   0.00%     0B / 0B             0.00%     0B / 0B   0B / 0B     0
+```
+
+```text
+λ docker run -itd -m 1024M --cpus 0.2 ubuntu
+f63282e24207f8bc4afade5295bdc7a2800fd53b5571919271e61220ad35fcfb
+
+λ docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED         STATUS         PORTS     NAMES
+f63282e24207   ubuntu    "bash"    5 seconds ago   Up 3 seconds             suspicious_colden
+
+λ docker stats f63282e24207
+CONTAINER ID   NAME                CPU %     MEM USAGE / LIMIT   MEM %     NET I/O     BLOCK I/O   PIDS
+f63282e24207   suspicious_colden   0.00%     2.762MiB / 1GiB     0.27%     906B / 0B   0B / 0B     1
+```
+
+```text
+λ docker update f63282e24207 -m 512M --cpus 0.3
+f63282e24207
+
+CONTAINER ID   NAME                CPU %     MEM USAGE / LIMIT   MEM %     NET I/O       BLOCK I/O   PIDS
+f63282e24207   suspicious_colden   0.00%     2.762MiB / 512MiB   0.54%     1.12kB / 0B   0B / 0B     1
+
+```
+
 12 - Inspecionar Containers Docker
+
+```text
+λ docker info
+Client:
+ Context:    default
+ Debug Mode: false
+ Plugins:
+  buildx: Docker Buildx (Docker Inc., v0.7.1)
+  compose: Docker Compose (Docker Inc., v2.2.1)
+  scan: Docker Scan (Docker Inc., 0.9.0)
+
+Server:
+ Containers: 5
+  Running: 1
+  Paused: 0
+  Stopped: 4
+ Images: 4
+ Server Version: 20.10.11
+ Storage Driver: overlay2
+  Backing Filesystem: extfs
+  Supports d_type: true
+  Native Overlay Diff: true
+  userxattr: false
+ Logging Driver: json-file
+ Cgroup Driver: cgroupfs
+ (...)
+```
+
+```text
+λ docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED             STATUS             PORTS     NAMES
+f63282e24207   ubuntu    "bash"    About an hour ago   Up About an hour             suspicious_colden
+
+λ docker logs f63282e24207
+```
+
+```text
+λ docker top f63282e24207
+UID                 PID                 PPID                C                   STIME               TTY                 TIME                CMD
+root                3589                3568                0                   22:39               ?                   00:00:00            bash
+
+```
 
 [Voltar ao Índice](#indice)
 
