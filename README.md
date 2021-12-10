@@ -15,7 +15,17 @@ NESSE CURSO VOCÊ VAI APRENDER DE UMA VEZ POR TODAS COMO TRABALHAR COM O DOCKER,
 
 ## <a name="parte1">1 - 01 - Intro ao Docker</a>
 
+01 - O que é o Docker
 
+![](img/aula01.png)
+
+02 - Ferramentas para o Curso de Docker
+
+- https://docs.docker.com/desktop/windows/install/
+
+03 - Conhecendo o Docker Hub
+
+- https://hub.docker.com/
 
 [Voltar ao Índice](#indice)
 
