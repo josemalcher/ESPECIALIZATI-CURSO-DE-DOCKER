@@ -409,9 +409,117 @@ fb76126fd87a   nginx          "/docker-entrypoint.…"   About a minute ago   Up
 
 08 - Criar Containers Docker com Nome
 
+```text
+λ docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+
+λ docker images
+REPOSITORY   TAG       IMAGE ID       CREATED        SIZE
+nginx        latest    f652ca386ed1   8 days ago     141MB
+ubuntu       latest    ba6acccedd29   7 weeks ago    72.8MB
+ubuntu       18.04     5a214d77f5d7   2 months ago   63.1MB
+
+λ docker run -d --name nginx-op4 -p 89:80 nginx
+ed480b1f02096f536a0f06a97de10ff3590dff0e850495219622fc571bdf3af5
+
+λ docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS         PORTS                NAMES
+ed480b1f0209   nginx     "/docker-entrypoint.…"   5 seconds ago   Up 3 seconds   0.0.0.0:89->80/tcp   nginx-op4
+
+```
+
+```text
+λ docker restart nginx-op4
+nginx-op4
+
+λ docker stop nginx-op4
+nginx-op4
+
+λ docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+
+λ docker ps -a
+CONTAINER ID   IMAGE          COMMAND                  CREATED              STATUS                      PORTS     NAMES
+ed480b1f0209   nginx          "/docker-entrypoint.…"   About a minute ago   Exited (0) 13 seconds ago             nginx-op4
+fb76126fd87a   nginx          "/docker-entrypoint.…"   6 hours ago          Exited (0) 6 hours ago                amazing_nightingale
+d5378434f23a   nginx          "/docker-entrypoint.…"   6 hours ago          Created                               zen_goldberg
+3993c2f20194   nginx          "/docker-entrypoint.…"   6 hours ago          Exited (0) 6 hours ago                flamboyant_johnson
+541aaff99bd0   ubuntu:18.04   "bash"                   6 hours ago          Exited (0) 6 hours ago                agitated_lamarr
+
+λ docker rm nginx-op4
+nginx-op4
+
+λ docker ps -a
+CONTAINER ID   IMAGE          COMMAND                  CREATED       STATUS                   PORTS     NAMES
+fb76126fd87a   nginx          "/docker-entrypoint.…"   6 hours ago   Exited (0) 6 hours ago             amazing_nightingale
+d5378434f23a   nginx          "/docker-entrypoint.…"   6 hours ago   Created                            zen_goldberg
+3993c2f20194   nginx          "/docker-entrypoint.…"   6 hours ago   Exited (0) 6 hours ago             flamboyant_johnson
+541aaff99bd0   ubuntu:18.04   "bash"                   6 hours ago   Exited (0) 6 hours ago             agitated_lamarr
+
+```
+
 09 - Criar Container Docker e Acessar Remotamente
 
+```text
+λ docker run -d -e MYSQL_ROOT_PASSWORD=123456 --name mysql-op1 -p 3306:3306 mysql:5.7.22
+Unable to find image 'mysql:5.7.22' locally
+5.7.22: Pulling from library/mysql
+be8881be8156: Pull complete
+c3995dabd1d7: Pull complete
+9931fdda3586: Pull complete
+bb1b6b6eff6a: Pull complete
+a65f125fa718: Pull complete
+2d9f8dd09be2: Pull complete
+37b912cb2afe: Pull complete
+79592d21cb7f: Pull complete
+00bfe968d82d: Pull complete
+79cf546d4770: Pull complete
+2b3c2e6bacee: Pull complete
+Digest: sha256:aaba540cdd9313645d892f4f20573e8b42b30e5be71c054b7befed2f7da5f85b
+Status: Downloaded newer image for mysql:5.7.22
+ee8feac84cbe99cab53d50cc673aac4b5c13cf3519ad6b909c33a2ceed75ae04
+
+λ docker ps
+CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS              PORTS                    NAMES
+ee8feac84cbe   mysql:5.7.22   "docker-entrypoint.s…"   2 minutes ago   Up About a minute   0.0.0.0:3306->3306/tcp   mysql-op1
+
+```
+
 10 - Montar Volumes de Containers Docker
+
+```text
+λ docker ps
+CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS         PORTS                    NAMES
+ee8feac84cbe   mysql:5.7.22   "docker-entrypoint.s…"   9 minutes ago   Up 9 minutes   0.0.0.0:3306->3306/tcp   mysql-op1
+
+λ docker inspect mysql-op1
+[
+    {
+        "Id": "ee8feac84cbe99cab53d50cc673aac4b5c13cf3519ad6b909c33a2ceed75ae04",
+        "Created": "2021-12-10T19:06:25.2429688Z",
+        "Path": "docker-entrypoint.sh",
+        "Args": [
+            "mysqld"
+        ],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+(...)
+            "Volumes": {
+                "/var/lib/mysql": {}
+            },
+```
+
+```text
+docker run --name mysql-op1 -e MYSQL_ROOT_PASSWORD=123456 -p 3306:3306 --volume=~/datadoker:/var/lib/mysql -d mysql:5.7.22
+
+λ docker run --name mysql-op1 -e MYSQL_ROOT_PASSWORD=123456 -p 3306:3306 --volume=C:\Users\josem\datadoker:/var/lib/mysql -d mysql:5.7.22
+80c8370fd29fabdd2ba05ae066c07fcac32c34d55458bca4fa7438e8e738267a
+
+```
+
 
 11 - Limitar Memória e CPU em Containers Docker
 
