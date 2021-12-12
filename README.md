@@ -609,7 +609,47 @@ root                3589                3568                0                   
 
 ## <a name="parte3">03 - Dockerfile</a>
 
+01 - Criando uma Imagem Docker de uma Aplicação Python
 
+- [03-Dockerfile/python](03-Dockerfile/python)
+
+```text
+λ docker images
+REPOSITORY   TAG       IMAGE ID       CREATED        SIZE
+nginx        latest    f652ca386ed1   9 days ago     141MB
+ubuntu       latest    ba6acccedd29   8 weeks ago    72.8MB
+ubuntu       18.04     5a214d77f5d7   2 months ago   63.1MB
+mysql        5.7.22    6bb891430fb6   3 years ago    372MB
+
+λ docker build -t app-python .
+[+] Building 119.5s (8/8) FINISHED
+ => [internal] load build definition from Dockerfile 0.1s  => => transferring dockerfile: 132B                                                                                                                                  0.0s  => [internal] load .dockerignore
+(...)
+```
+
+```text
+λ docker images
+REPOSITORY   TAG       IMAGE ID       CREATED              SIZE
+app-python   latest    eae56ff6dc1a   About a minute ago   917MB
+nginx        latest    f652ca386ed1   9 days ago           141MB
+ubuntu       latest    ba6acccedd29   8 weeks ago          72.8MB
+ubuntu       18.04     5a214d77f5d7   2 months ago         63.1MB
+mysql        5.7.22    6bb891430fb6   3 years ago          372MB
+
+λ docker run -it app-python
+Qual é seu Nome?Jose
+Olá  Jose Seja bem vindo!
+```
+
+02 - Docker - Criando uma Imagem Leve App Python
+
+03 - Criando uma Imagem Docker de uma Aplicação PHP
+
+04 - Criando uma Imagem Docker de uma Aplicação Node.js
+
+05 - Criando uma Imagem Docker de uma Aplicação GO
+
+06 - Enviar Imagens Para o Docker HUB
 
 [Voltar ao Índice](#indice)
 
@@ -618,7 +658,25 @@ root                3589                3568                0                   
 
 ## <a name="parte4">04 - Docker Compose</a>
 
+01 - Docker Compose e Ambiente Multi-containers
 
+02 - Criando Arquivo docker-compose.yml
+
+03 - Ambiente Docker com Nginx e PHP
+
+04 - Atualizando o Container para PHP 8
+
+05 - Aplicação Laravel em Containers Docker
+
+06 - Criando uma imagem personalizada do PHP para o Laravel 8
+
+07 - Criando Containers do NGINX + MYSQL + REDIS
+
+08 - Docker - Acessar Containers e Comunicação Entre Eles
+
+09 - Adicionar Container de Filas no docker-compose.yml
+
+10 - Docker Compose - Matar os Containers
 
 [Voltar ao Índice](#indice)
 
