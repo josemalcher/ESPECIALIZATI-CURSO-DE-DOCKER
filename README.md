@@ -643,6 +643,38 @@ Olá  Jose Seja bem vindo!
 
 02 - Docker - Criando uma Imagem Leve App Python
 
+```docker
+FROM ubuntu
+
+RUN apt update && apt install -y python3 && apt clean
+
+COPY app.py /opt/main.py
+
+CMD python3 /opt/main.py
+
+```
+
+```text
+λ docker build -t app-python:v2 .
+[+] Building 1.6s (5/7)
+
+λ docker images
+REPOSITORY   TAG       IMAGE ID       CREATED          SIZE
+app-python   v2        adff77e0ffd8   19 seconds ago   144MB
+app-python   latest    eae56ff6dc1a   25 hours ago     917MB
+nginx        latest    f652ca386ed1   10 days ago      141MB
+ubuntu       latest    ba6acccedd29   8 weeks ago      72.8MB
+ubuntu       18.04     5a214d77f5d7   2 months ago     63.1MB
+mysql        5.7.22    6bb891430fb6   3 years ago      372MB
+
+λ docker run -it app-python:v2
+Qual é seu Nome?Jose
+Olá  Jose Seja bem vindo!
+
+```
+
+
+
 03 - Criando uma Imagem Docker de uma Aplicação PHP
 
 04 - Criando uma Imagem Docker de uma Aplicação Node.js
