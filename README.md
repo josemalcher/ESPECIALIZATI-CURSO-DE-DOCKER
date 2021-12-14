@@ -677,6 +677,35 @@ Olá  Jose Seja bem vindo!
 
 03 - Criando uma Imagem Docker de uma Aplicação PHP
 
+- [03-Dockerfile/php/Dockerfile](03-Dockerfile/php/Dockerfile)
+
+```text
+FROM php:7.4-cli
+
+COPY . /usr/src/myapp
+
+WORKDIR /usr/src/myapp
+
+CMD ["php", "./index.php"]
+
+```
+
+```text
+λ docker build -t app-php .
+[+] Building 27.1s (4/7)
+ => [internal] load build definition from Dockerfile
+ 
+ 
+λ docker images
+REPOSITORY   TAG       IMAGE ID       CREATED          SIZE
+app-php      latest    345780003f3d   14 seconds ago   473MB
+
+
+λ docker run -it app-php
+Aplicação em PHP
+```
+
+
 04 - Criando uma Imagem Docker de uma Aplicação Node.js
 
 05 - Criando uma Imagem Docker de uma Aplicação GO
