@@ -752,7 +752,118 @@ CONTAINER ID   IMAGE      COMMAND                  CREATED         STATUS       
 
 05 - Criando uma Imagem Docker de uma Aplicação GO
 
+= [03-Dockerfile/golang](03-Dockerfile/golang)
+
+```text
+FROM golang:1.12.0-alpine
+
+RUN mkdir /app
+
+ADD . /app
+
+WORKDIR /app
+
+RUN go build -o main .
+
+CMD ["/app/main"]
+
+```
+
+```text
+λ docker build -t app-go .
+[+] Building 48.5s (4/9)
+ => [internal] load build definition from Dockerfile
+```
+
+```
+λ docker images
+REPOSITORY   TAG       IMAGE ID       CREATED          SIZE
+app-go       latest    159e4f846042   27 seconds ago   355MB
+```
+
+```
+λ docker run -itd -p 81:8084 app-go
+f1e32f7177fbbabdfac7d09c447da5110b19032d1bbe96ceec3c7b0eebaf0bce
+
+λ docker ps
+CONTAINER ID   IMAGE     COMMAND       CREATED          STATUS          PORTS                  NAMES
+f1e32f7177fb   app-go    "/app/main"   21 seconds ago   Up 17 seconds   0.0.0.0:81->8084/tcp   loving_shamir
+```
+
+
 06 - Enviar Imagens Para o Docker HUB
+
+```text
+λ docker login
+Login with your Docker ID to push and pull images from Docker Hub. If you don't have a Docker ID, head over to https://hub.docker.com to create one.
+Username: josemalcher
+Password:
+Login Succeeded
+
+```
+
+```text
+λ docker build -t josemalcher/app-node:latest .
+[+] Building 5.0s (2/3)
+ => [internal] load build definition from Dockerfile
+```
+
+```text
+λ docker images
+REPOSITORY             TAG       IMAGE ID       CREATED          SIZE
+app-go                 latest    159e4f846042   8 minutes ago    355MB
+josemalcher/app-node   latest    9513acfb00f5   18 minutes ago   182MB
+```
+
+```text
+λ docker push josemalcher/app-node
+Using default tag: latest
+The push refers to repository [docker.io/josemalcher/app-node]
+f051a1da44b: Pushed
+3a3da55c278: Pushed
+3d24dd66cbf: Pushed
+f70bf18a086: Pushed
+d82e32a16b5: Pushed
+0ffdac4ff33: Mounted from library/node
+eb9e90e2c8c: Mounted from library/node
+2c6ab21d9c1: Mounted from library/node
+a058d5342cc: Mounted from library/node
+latest: digest: sha256:4f662ef117414d16176e85e889027f93e3e3fe320a6e0248131a0f5 size: 2196
+```
+
+```text
+λ docker rmi josemalcher/app-node
+Untagged: josemalcher/app-node:latest
+Untagged: josemalcher/app-node@sha256:4f662ef117414d16176e85e889027f93e3e3fe320a6e0248131a0f5
+
+λ docker images
+REPOSITORY   TAG       IMAGE ID       CREATED          SIZE
+app-go       latest    159e4f846042   11 minutes ago   355MB
+app-node     latest    9513acfb00f5   20 minutes ago   182MB
+app-php      latest    345780003f3d   24 hours ago     473MB
+nginx        latest    f652ca386ed1   12 days ago      141MB
+ubuntu       latest    ba6acccedd29   2 months ago     72.8MB
+ubuntu       18.04     5a214d77f5d7   2 months ago     63.1MB
+mysql        5.7.22    6bb891430fb6   3 years ago      372MB
+```
+
+https://hub.docker.com/r/josemalcher/app-node
+
+```text
+λ docker run -itd -p 83:8000 josemalcher/app-node
+Unable to find image 'josemalcher/app-node:latest' locally
+latest: Pulling from josemalcher/app-node
+Digest: sha256:f117414d16176e85e889027f93e3e3fe320a6e0248131a0f5
+Status: Downloaded newer image for josemalcher/app-node:latest
+4d20ffe2ca10ebd78fcfcd9ef1b8c573f07e2777e66a33b
+```
+
+```text
+λ docker ps
+CONTAINER ID   IMAGE                  COMMAND                  CREATED              STATUS              PORTS                  NAMES
+4d20ffe167d2   josemalcher/app-node   "docker-entrypoint.s…"   About a minute ago   Up About a minute   0.0.0.0:83->8000/tcp   sleepy_sinoussi
+```
+
 
 [Voltar ao Índice](#indice)
 
