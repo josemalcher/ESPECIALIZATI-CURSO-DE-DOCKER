@@ -708,6 +708,48 @@ Aplicação em PHP
 
 04 - Criando uma Imagem Docker de uma Aplicação Node.js
 
+- [03-Dockerfile/node](03-Dockerfile/node)
+
+```text
+FROM node:17-alpine3.14
+
+RUN mkdir -p /usr/src/app
+
+WORKDIR /usr/src/app
+
+COPY package.json /usr/src/app/
+RUN npm install
+
+COPY . /usr/src/app/
+
+CMD [ "npm", "start" ]
+
+EXPOSE 8000
+
+```
+
+```
+λ docker build -t app-node .
+[+] Building 14.5s (2/3)
+ => [internal] load build definition from Dockerfile
+```
+
+```
+λ docker images
+REPOSITORY   TAG       IMAGE ID       CREATED          SIZE
+app-node     latest    9513acfb00f5   18 seconds ago   182MB
+```
+
+```
+λ docker run -p 84:8000 -d app-node
+98a1bce731eb74fb408b7cff07d4df2aeb3625844162a7bd7b1419a2d6bb3b7e
+
+λ docker ps
+CONTAINER ID   IMAGE      COMMAND                  CREATED         STATUS         PORTS                  NAMES
+98a1bce731eb   app-node   "docker-entrypoint.s…"   8 seconds ago   Up 7 seconds   0.0.0.0:84->8000/tcp   ecstatic_brown
+```
+
+
 05 - Criando uma Imagem Docker de uma Aplicação GO
 
 06 - Enviar Imagens Para o Docker HUB
