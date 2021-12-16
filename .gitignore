@@ -14,5 +14,5 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
-!/04-Docker-Compose/app-laravel-docker/laravel/.env
-!/04-Docker-Compose/app-laravel-docker/.env
+#04-Docker-Compose/app-laravel-docker/.env
+04-Docker-Compose/app-laravel-docker/.docker/mysql

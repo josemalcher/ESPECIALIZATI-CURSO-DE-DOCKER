@@ -1003,7 +1003,59 @@ bb6cdaddddc0   nginx:alpine   "/docker-entrypoint.…"   3 minutes ago   Up 3 mi
 
 09 - Adicionar Container de Filas no docker-compose.yml
 
+```text
+λ docker-compose up -d
+Creating network "app-laravel-docker_docker-laravel" with driver "bridge"
+Pulling redis (redis:latest)...
+
+λ docker ps
+CONTAINER ID   IMAGE                           COMMAND                  CREATED          STATUS                          PORTS                    NAMES
+95bbbc1c0ab0   josemalcher/laravel-app-curso   "docker-php-entrypoi…"   19 seconds ago   Up 15 seconds                   9000/tcp                 app-laravel-docker_app_1
+f153356baac4   app-laravel-docker_queue        "docker-php-entrypoi…"   22 seconds ago   Restarting (255) 1 second ago                            app-laravel-docker_queue_1
+c6c054389fa3   mysql:5.7.22                    "docker-entrypoint.s…"   24 seconds ago   Up Less than a second           0.0.0.0:3307->3306/tcp   app-laravel-docker_mysql_1
+5e08ef4968ea   nginx:alpine                    "/docker-entrypoint.…"   24 seconds ago   Up 20 seconds                   0.0.0.0:84->80/tcp       app-laravel-docker_nginx_1
+6fa3adc27be7   redis:latest                    "docker-entrypoint.s…"   24 seconds ago   Up 20 seconds                   6379/tcp                 app-laravel-docker_redis_1
+
+λ docker-composer exec app bash
+'docker-composer' is not recognized as an internal or external command,
+operable program or batch file.
+
+λ docker-compose exec app bash
+josemalcher@95bbbc1c0ab0:/var/www$ ls
+CHANGELOG.md  Dockerfile  README.md  app  artisan  bootstrap  composer.json  config  database  docker  docker-compose.yml  package.json  phpunit.xml  public  resources  routes  server.php  storage  tests  webpack.mix.js
+josemalcher@95bbbc1c0ab0:/var/www$
+
+josemalcher@95bbbc1c0ab0:/var/www$ composer install
+No composer.lock file present. Updating dependencies to latest instead of installing from lock file. See https://getcomposer.org/install for more information.
+Loading composer repositories with package information
+Updating dependencies
+
+> @php artisan vendor:publish --tag=laravel-assets --ansi --force
+No publishable resources for tag [laravel-assets].
+Publishing complete.
+
+josemalcher@95bbbc1c0ab0:/var/www$ php artisan key:generate
+Application key set successfully.
+
+```
+
 10 - Docker Compose - Matar os Containers
+
+```text
+λ docker-compose down
+Stopping app-laravel-docker_app_1   ... done
+Stopping app-laravel-docker_queue_1 ... done
+Stopping app-laravel-docker_mysql_1 ... done
+Stopping app-laravel-docker_nginx_1 ... done
+Stopping app-laravel-docker_redis_1 ... done
+Removing app-laravel-docker_app_1   ... done
+Removing app-laravel-docker_queue_1 ... done
+Removing app-laravel-docker_mysql_1 ... done
+Removing app-laravel-docker_nginx_1 ... done
+Removing app-laravel-docker_redis_1 ... done
+Removing network app-laravel-docker_docker-laravel
+```
+
 
 [Voltar ao Índice](#indice)
 
