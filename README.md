@@ -943,6 +943,54 @@ Docker Compose is now in the Docker CLI, try `docker compose`
 
 03 - Ambiente Docker com Nginx e PHP
 
+- [04-Docker-Compose/app-php/docker-compose.yml](04-Docker-Compose/app-php/docker-compose.yml)
+
+```docker
+version: '3.8'
+
+services:
+  web:
+    image: nginx:alpine
+    restart: always
+    ports:
+      - 84:80
+    volumes:
+      - ./docker/nginx/:/etc/nginx/conf.d/
+      - ./:/var/www
+    networks:
+      - example-network
+
+  php:
+    image: php:8.0-fpm
+    volumes:
+      - ./:/var/www
+    networks:
+      - example-network
+
+networks:
+  example-network:
+    driver: bridge
+
+```
+
+```text
+λ docker-compose up -d
+Creating network "app-php_example-network" with driver "bridge"
+Pulling web (nginx:alpine)...
+alpine: Pulling from library/nginx
+Status: Downloaded newer image for nginx:alpine
+Pulling php (php:8.0-fpm)...
+8.0-fpm: Pulling from library/php
+Status: Downloaded newer image for php:8.0-fpm
+Creating app-php_web_1 ... done
+Creating app-php_php_1 ... done
+
+λ docker ps
+CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS         PORTS                NAMES
+bb6cdaddddc0   nginx:alpine   "/docker-entrypoint.…"   3 minutes ago   Up 3 minutes   0.0.0.0:84->80/tcp   app-php_web_1
+30dc0de36e7e   php:8.0-fpm    "docker-php-entrypoi…"   3 minutes ago   Up 3 minutes   9000/tcp             app-php_php_1
+```
+
 04 - Atualizando o Container para PHP 8
 
 05 - Aplicação Laravel em Containers Docker
